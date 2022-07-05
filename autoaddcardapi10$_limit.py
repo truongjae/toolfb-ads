@@ -365,10 +365,11 @@ def getCookie(listCookies):
 	return result
 
 
-print("1.UID|Pass|Cookie|2FA")
-print("2.UID|Pass|2FA|Cookie")
-option = int(input("Nhập định dạng: "))
+# print("1.UID|Pass|Cookie|2FA")
+# print("2.UID|Pass|2FA|Cookie")
+# option = int(input("Nhập định dạng: "))
 
+option = 1
 arrThread = []
 listClone = listCloneAcc(option)
 count = 1
