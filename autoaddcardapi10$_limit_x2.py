@@ -349,6 +349,7 @@ def auto_add_card(acc,option):
 		else:
 			
 			sl(2)
+			
 			card2 = list_card_2[count_add_list_card_2]
 			
 			if index_list_card_2==9:
