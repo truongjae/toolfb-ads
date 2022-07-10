@@ -330,6 +330,9 @@ def auto_add_card(acc,option):
 	global count_add_list_card_2
 	check_add_card_success = False
 	cookies = convert_cookie_to_json(acc.cookies)
+	# string_cookie = getCookie(login(acc.tk,acc.mk,acc.fa))
+	# print(string_cookie)
+	# cookies = convert_cookie_to_json(string_cookie)
 	fb_dtsg = get_fb_dtsg(cookies)
 	print(fb_dtsg)
 	sl(3)
@@ -432,6 +435,6 @@ count_list_clone = len(listClone)
 for acc in listClone:
 	t = threading.Thread(target = auto_add_card,args=(acc,option,))
 	arrThread.append(t)
-	# break
+	break
 for t in arrThread:
 	t.start()
