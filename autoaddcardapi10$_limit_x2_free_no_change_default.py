@@ -173,21 +173,20 @@ def get_account_id(cookies):
 	return data
 
 def set_country_and_currentcy(cookies,fb_dtsg,account_id):
+	# url = "https://m.facebook.com/api/graphql/"
+	# myID = cookies['c_user']
+	# data = {
+	# 	'fb_dtsg': fb_dtsg,
+	# 	'variables': '{"input":{"client_mutation_id":"3","actor_id":"'+myID+'","billable_account_payment_legacy_account_id":"'+account_id+'","currency":"USD","logging_data":{"logging_counter":13,"logging_id":"113367954"},"tax":{"business_address":{"city":"","country_code":"US","state":"","street1":"","street2":"","zip":""},"business_name":"","is_personal_use":false,"second_tax_id":"","second_tax_id_type":null,"tax_exempt":false,"tax_id":"","tax_id_type":"NONE"},"timezone":"Asia/Jakarta"}}',
+	# 	'doc_id': '5428097817221702'
+	# }
+	# requests.post(url,data = data, cookies = cookies)
+	# print("đổi tiền thành công")
 	url = "https://m.facebook.com/api/graphql/"
 	myID = cookies['c_user']
 	data = {
 		'fb_dtsg': fb_dtsg,
-		'variables': '{"input":{"client_mutation_id":"3","actor_id":"'+myID+'","billable_account_payment_legacy_account_id":"'+account_id+'","currency":"USD","logging_data":{"logging_counter":13,"logging_id":"113367954"},"tax":{"business_address":{"city":"","country_code":"US","state":"","street1":"","street2":"","zip":""},"business_name":"","is_personal_use":false,"second_tax_id":"","second_tax_id_type":null,"tax_exempt":false,"tax_id":"","tax_id_type":"NONE"},"timezone":"Asia/Jakarta"}}',
-		'doc_id': '5428097817221702'
-	}
-	requests.post(url,data = data, cookies = cookies)
-	print("đổi tiền thành công")
-def set_country_and_currentcy_lol(cookies,fb_dtsg,account_id):
-	url = "https://m.facebook.com/api/graphql/"
-	myID = cookies['c_user']
-	data = {
-		'fb_dtsg': fb_dtsg,
-		'variables': '{"input":{"client_mutation_id":"4","actor_id":"'+myID+'","billable_account_payment_legacy_account_id":"'+account_id+'","currency":"USD","logging_data":{"logging_counter":19,"logging_id":"526291686"},"tax":{"business_address":{"city":"","country_code":"US","state":"","street1":"","street2":"","zip":""},"business_name":"","is_personal_use":false,"tax_id":"1234567891025"},"timezone":"Asia/Jakarta"}}',
+		'variables': '{"input":{"client_mutation_id":"2","actor_id":"'+myID+'","billable_account_payment_legacy_account_id":"'+account_id+'","currency":null,"logging_data":{"logging_counter":10,"logging_id":"806193005"},"tax":{"business_address":{"city":"","country_code":"US","state":"","street1":"","street2":"","zip":""},"business_name":"","email":"","is_personal_use":false,"phone_number":"","second_tax_id":"","second_tax_id_type":null,"tax_exempt":false,"tax_id":"","tax_id_type":"NONE"},"timezone":"Asia/Jakarta"}}',
 		'doc_id': '5428097817221702'
 	}
 	requests.post(url,data = data, cookies = cookies)
@@ -235,6 +234,23 @@ def check_added_card(cookies,fb_dtsg,account_id):
 		return False
 
 def add_card(cookies,fb_dtsg,account_id,card):
+	# myID = cookies['c_user']
+	# url = "https://m.secure.facebook.com/ajax/payment/token_proxy.php?tpe=%2Fapi%2Fgraphql%2F"
+	# card_first_6 = card.code[:6]
+	# card_last_4 = card.code[len(card.code)-4:]
+	# date = card.date.split("|")
+	# month = date[0]
+	# year = date[1]
+
+	# if int(month) < 10:
+	# 	month = month[1]
+
+	# data = {
+	# 	'fb_dtsg': fb_dtsg,
+	# 	'variables': '{"input":{"client_mutation_id":"6","actor_id":"'+myID+'","billing_address":{"country_code":"US"},"billing_logging_data":{"logging_counter":28,"logging_id":"3221251053"},"cardholder_name":"abcde","credit_card_first_6":{"sensitive_string_value":"'+card_first_6+'"},"credit_card_last_4":{"sensitive_string_value":"'+card_last_4+'"},"credit_card_number":{"sensitive_string_value":"'+card.code+'"},"csc":{"sensitive_string_value":"'+card.ccv+'"},"expiry_month":"'+month+'","expiry_year":"'+year+'","payment_account_id":"'+account_id+'","payment_type":"MOR_ADS_INVOICE","unified_payments_api":true}}',
+	# 	'doc_id': '4126726757375265'
+	# }
+	# requests.post(url,data = data, cookies = cookies)
 	myID = cookies['c_user']
 	url = "https://m.secure.facebook.com/ajax/payment/token_proxy.php?tpe=%2Fapi%2Fgraphql%2F"
 	card_first_6 = card.code[:6]
@@ -248,11 +264,19 @@ def add_card(cookies,fb_dtsg,account_id,card):
 
 	data = {
 		'fb_dtsg': fb_dtsg,
-		'variables': '{"input":{"client_mutation_id":"6","actor_id":"'+myID+'","billing_address":{"country_code":"US"},"billing_logging_data":{"logging_counter":28,"logging_id":"3221251053"},"cardholder_name":"abcde","credit_card_first_6":{"sensitive_string_value":"'+card_first_6+'"},"credit_card_last_4":{"sensitive_string_value":"'+card_last_4+'"},"credit_card_number":{"sensitive_string_value":"'+card.code+'"},"csc":{"sensitive_string_value":"'+card.ccv+'"},"expiry_month":"'+month+'","expiry_year":"'+year+'","payment_account_id":"'+account_id+'","payment_type":"MOR_ADS_INVOICE","unified_payments_api":true}}',
+		'variables': '{"input":{"client_mutation_id":"6","actor_id":"'+myID+'","billing_address":{"country_code":"US"},"billing_logging_data":{"logging_counter":26,"logging_id":"806193005"},"cardholder_name":"abcdefghik","credit_card_first_6":{"sensitive_string_value":"'+card_first_6+'"},"credit_card_last_4":{"sensitive_string_value":"'+card_last_4+'"},"credit_card_number":{"sensitive_string_value":"'+card.code+'"},"csc":{"sensitive_string_value":"'+card.ccv+'"},"expiry_month":"'+month+'","expiry_year":"'+year+'","payment_account_id":"'+account_id+'","payment_type":"MOR_ADS_INVOICE","unified_payments_api":true}}',
 		'doc_id': '4126726757375265'
 	}
 	requests.post(url,data = data, cookies = cookies)
-
+def set_tax_after_add_card(cookies,fb_dtsg,account_id):
+	myID = cookies['c_user']
+	url = "https://m.facebook.com/api/graphql/"
+	data={
+		'fb_dtsg': fb_dtsg,
+		'variables': '{"input":{"client_mutation_id":"11","actor_id":"'+myID+'","billable_account_payment_legacy_account_id":"'+account_id+'","currency":null,"logging_data":{"logging_counter":57,"logging_id":"806193005"},"tax":{"business_address":{"city":"sacxvxc","country_code":"US","state":"CA","street1":"ABC","street2":"ABC2","zip":"75031"},"business_name":"retbcvnvf","is_personal_use":false,"second_tax_id":"","tax_id":""},"timezone":null}}',
+		'doc_id': '5428097817221702'
+	}
+	requests.post(url,data=data,cookies=cookies)
 def set_limit(cookies,fb_dtsg,account_id):
 	myID = cookies['c_user']
 	url = "https://m.facebook.com/api/graphql/"
@@ -329,10 +353,10 @@ def auto_add_card(acc,option):
 	global index_list_card_2
 	global count_add_list_card_2
 	check_add_card_success = False
-	cookies = convert_cookie_to_json(acc.cookies)
-	# string_cookie = getCookie(login(acc.tk,acc.mk,acc.fa))
-	# print(string_cookie)
-	# cookies = convert_cookie_to_json(string_cookie)
+	# cookies = convert_cookie_to_json(acc.cookies)
+	string_cookie = getCookie(login(acc.tk,acc.mk,acc.fa))
+	print(string_cookie)
+	cookies = convert_cookie_to_json(string_cookie)
 	fb_dtsg = get_fb_dtsg(cookies)
 	print(fb_dtsg)
 	sl(3)
@@ -341,13 +365,14 @@ def auto_add_card(acc,option):
 	account_id = get_account_id(cookies)
 	print(account_id)
 	sl(3)
-	set_country_and_currentcy_lol(cookies,fb_dtsg,account_id)
+	set_country_and_currentcy(cookies,fb_dtsg,account_id)
 	for i in range(3):
 		if not check_added_card(cookies,fb_dtsg,account_id):
 			sl(3)
 			card = random.choice(list_card())
 			add_card(cookies,fb_dtsg,account_id,card)
 		else:
+			set_tax_after_add_card(cookies,fb_dtsg,account_id)
 			card2 = list_card_2[count_add_list_card_2]
 			
 			if index_list_card_2==1:
@@ -368,7 +393,7 @@ def auto_add_card(acc,option):
 		sl(2)
 		set_limit(cookies,fb_dtsg,account_id)
 		sl(2)
-		set_tax(cookies,fb_dtsg,account_id)
+		# set_tax(cookies,fb_dtsg,account_id)
 		if get_card_id_2(cookies,fb_dtsg,account_id) != "":
 			saveAccSuccess(acc,option)
 		count_add_card_success+=1
@@ -424,7 +449,7 @@ def getCookie(listCookies):
 	result = result[0:len(result)-1]
 	return result
 
-option = 1
+option = 2
 arrThread = []
 listClone = listCloneAcc(option)
 list_card_2 = list_card_2()
@@ -435,6 +460,6 @@ count_list_clone = len(listClone)
 for acc in listClone:
 	t = threading.Thread(target = auto_add_card,args=(acc,option,))
 	arrThread.append(t)
-	break
+	# break
 for t in arrThread:
 	t.start()
