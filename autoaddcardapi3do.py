@@ -57,29 +57,29 @@ def listCloneCookie():
 		cookies.append(cookie[3])
 	return cookies
 
-# def listCloneAcc():
-# 	f = open("clone.txt","r+")
-# 	data = f.readlines()
-# 	accs = []
-# 	for d in data:
-# 		cookie = d.split("|")
-# 		fa = cookie[2]
-# 		fa = fa.replace(" ","")
-# 		acc = Acc(cookie[0],cookie[1],fa,cookie[3])
-# 		accs.append(acc)
-# 	return accs
-
 def listCloneAcc():
 	f = open("clone.txt","r+")
 	data = f.readlines()
 	accs = []
 	for d in data:
 		cookie = d.split("|")
-		fa = "4ITIIN6K2VMMQH4JGKXGH7TJEFZYEARE" #cookie[3]
+		fa = cookie[2]
 		fa = fa.replace(" ","")
-		acc = Acc(cookie[0],cookie[1],fa,cookie[2])
+		acc = Acc(cookie[0],cookie[1],fa,cookie[3])
 		accs.append(acc)
 	return accs
+
+# def listCloneAcc():
+# 	f = open("clone.txt","r+")
+# 	data = f.readlines()
+# 	accs = []
+# 	for d in data:
+# 		cookie = d.split("|")
+# 		fa = cookie[3]
+# 		fa = fa.replace(" ","")
+# 		acc = Acc(cookie[0],cookie[1],fa,cookie[2])
+# 		accs.append(acc)
+# 	return accs
 
 # def tick_card_used(card):
 # 	data = open("testcard.txt", "r+").readlines()
@@ -294,12 +294,16 @@ def auto_add_card(acc):
 	check_add_card_success = False
 	cookies = convert_cookie_to_json(acc.cookies)
 	fb_dtsg = get_fb_dtsg(cookies)
+	sl(3)
 	print(fb_dtsg)
 	change_language(cookies,fb_dtsg)
+	sl(3)
 	account_id = get_account_id(cookies)
 	print(account_id)
+	sl(3)
 	set_country_and_currentcy_lol(cookies,fb_dtsg,account_id)
-	for i in range(5):
+	sl(3)
+	for i in range(3):
 		if not check_added_card(cookies,fb_dtsg,account_id):
 			sl(2)
 			card = random.choice(list_card())
@@ -309,6 +313,7 @@ def auto_add_card(acc):
 			break
 
 	if check_add_card_success:
+		sl(3)
 		set_limit(cookies,fb_dtsg,account_id)
 		# set_tax(cookies,fb_dtsg,account_id)
 		saveAccSuccess(acc)
@@ -374,7 +379,7 @@ count_list_clone = len(listClone)
 for acc in listClone:
 	t = threading.Thread(target = auto_add_card,args=(acc,))
 	arrThread.append(t)
-	# break
+	break
 	# if count == 30:
 	# 	break
 	# count+=1

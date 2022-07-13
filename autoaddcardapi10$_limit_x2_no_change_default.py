@@ -329,7 +329,10 @@ def auto_add_card(acc,option):
 	global index_list_card_2
 	global count_add_list_card_2
 	check_add_card_success = False
-	cookies = convert_cookie_to_json(acc.cookies)
+	# cookies = convert_cookie_to_json(acc.cookies)
+	string_cookie = getCookie(login(acc.tk,acc.mk,acc.fa))
+	print(string_cookie)
+	cookies = convert_cookie_to_json(string_cookie)
 	fb_dtsg = get_fb_dtsg(cookies)
 	print(fb_dtsg)
 
