@@ -365,7 +365,7 @@ def auto_add_card(acc):
 
 	if count_add_list_card_2 < len(list_card_2):
 		print("add thẻ mới: "+card2.code)
-		sl(ri(5,15))
+		sl(ri(10,30))
 		add_card(cookies,fb_dtsg,account_id,card2)
 	sl(3)
 	set_limit(cookies,fb_dtsg,account_id)
