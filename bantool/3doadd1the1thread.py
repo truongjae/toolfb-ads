@@ -64,6 +64,18 @@ def listCloneCookie():
 		cookies.append(cookie[3])
 	return cookies
 
+# def listCloneAcc():
+# 	f = open("clone.txt","r+")
+# 	data = f.readlines()
+# 	accs = []
+# 	for d in data:
+# 		cookie = d.split("|")
+# 		fa = cookie[2]
+# 		fa = fa.replace(" ","")
+# 		acc = Acc(cookie[0],cookie[1],fa,cookie[3])
+# 		accs.append(acc)
+# 	return accs
+
 def listCloneAcc():
 	f = open("clone.txt","r+")
 	data = f.readlines()
@@ -75,6 +87,7 @@ def listCloneAcc():
 		acc = Acc(cookie[0],cookie[1],fa,cookie[2])
 		accs.append(acc)
 	return accs
+
 
 
 
@@ -322,23 +335,25 @@ def auto_add_card(acc):
 		index_list_card_2 = 0
 		count_add_list_card_2+=1
 	index_list_card_2+=1
-	print("haha")
 	if count_add_list_card_2 < len(list_card_2):
 		print("add thẻ mới: "+card2.code)
-		add_card(acc.cookies,acc.fb_dtsg,acc.account_id,card2)
-	sl(3)
-	set_limit(acc.cookies,acc.fb_dtsg,acc.account_id)
-	sl(3)
-	count_add_card_success+=1
-	print("Add thành công: "+str(count_add_card_success)+"/"+str(count_list_clone))
-
+		if card2.code[0:3] != "485":
+			add_card(acc.cookies,acc.fb_dtsg,acc.account_id,card2)
+			sl(2)
+			set_limit(acc.cookies,acc.fb_dtsg,acc.account_id)
+			count_add_card_success+=1
+			print("Add thành công: "+str(count_add_card_success)+"/"+str(count_list_clone))
+		else:
+			print("Thẻ không hợp lệ")
+	else:
+		print("Không đủ thẻ để add")
 def setting_info(acc):
 	global list_acc_fb_dtsg
 	global count_setting_acc_success
-	# cookies = convert_cookie_to_json(acc.cookies)
-	string_cookie = getCookie(login(acc.tk,acc.mk,acc.fa))
-	print(string_cookie)
-	cookies = convert_cookie_to_json(string_cookie)
+	cookies = convert_cookie_to_json(acc.cookies)
+	# string_cookie = getCookie(login(acc.tk,acc.mk,acc.fa))
+	# print(string_cookie)
+	# cookies = convert_cookie_to_json(string_cookie)
 	fb_dtsg = get_fb_dtsg(cookies)
 	sl(3)
 	print(fb_dtsg)
@@ -347,13 +362,18 @@ def setting_info(acc):
 	account_id = get_account_id(cookies)
 	print(account_id)
 	sl(3)
-	set_country_and_currentcy_lol(cookies,fb_dtsg,account_id)
+	try:
+		set_country_and_currentcy_lol(cookies,fb_dtsg,account_id)
+	except:
+		pass
 	acc_fb_dtsg = AccFbdtsg(cookies,fb_dtsg,account_id)
 	list_acc_fb_dtsg.append(acc_fb_dtsg)
 	count_setting_acc_success+=1
 	if count_setting_acc_success >= len(listClone):
 		for acc in list_acc_fb_dtsg:
 			auto_add_card(acc)
+	# for acc in list_acc_fb_dtsg:
+	# 	auto_add_card(acc)
 def login(email,pw,fa):
 	browser = mechanize.Browser()
 	browser.set_handle_robots(False)
