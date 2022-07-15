@@ -118,15 +118,6 @@ def listCard():
 		cards.append(card)
 	return cards
 
-def getAccountId(driver):
-	url = driver.current_url
-	acc = url.split("account_id=")
-	acc_id = ""
-	for i in acc[1]:
-		if i=="&":
-			break
-		acc_id+=i
-	return acc_id
 def get_fb_dtsg(cookies):
 	try:
 		gets = requests.get("https://www.facebook.com",cookies = cookies)
@@ -137,19 +128,6 @@ def get_fb_dtsg(cookies):
 		return gets
 	except:
 		return None
-def setLimitWithApi(driver,tk,cookie):
-	print("hello")
-	cookies = convert_cookie_to_json(cookie)
-	fb_dtsg = get_fb_dtsg(cookies)
-	url = "https://m.facebook.com/api/graphql/"
-	data = {
-		'fb_dtsg': fb_dtsg,
-		'fb_api_caller_class': 'RelayModern',
-		'fb_api_req_friendly_name': 'useBillingUpdateAccountSpendLimitScreenMutation',
-		'variables': '{"input":{"client_mutation_id":"8","actor_id":"'+tk+'","billable_account_payment_legacy_account_id":"'+getAccountId(driver)+'","new_spend_limit":{"amount":"0.1","currency":"USD"}}}',
-		'doc_id': '5615899425146711'
-	}
-	requests.post(url,data = data, cookies = cookies)
 
 def saveAccSuccess(acc,option):
 	f = open("clonesuccess.txt","a+")
@@ -173,25 +151,6 @@ def get_account_id(cookies):
 	data = cut_string(data,'"',False)
 	return data
 
-def set_country_and_currentcy(cookies,fb_dtsg,account_id):
-	# url = "https://m.facebook.com/api/graphql/"
-	# myID = cookies['c_user']
-	# data = {
-	# 	'fb_dtsg': fb_dtsg,
-	# 	'variables': '{"input":{"client_mutation_id":"3","actor_id":"'+myID+'","billable_account_payment_legacy_account_id":"'+account_id+'","currency":"USD","logging_data":{"logging_counter":13,"logging_id":"113367954"},"tax":{"business_address":{"city":"","country_code":"US","state":"","street1":"","street2":"","zip":""},"business_name":"","is_personal_use":false,"second_tax_id":"","second_tax_id_type":null,"tax_exempt":false,"tax_id":"","tax_id_type":"NONE"},"timezone":"Asia/Jakarta"}}',
-	# 	'doc_id': '5428097817221702'
-	# }
-	# requests.post(url,data = data, cookies = cookies)
-	# print("đổi tiền thành công")
-	url = "https://m.facebook.com/api/graphql/"
-	myID = cookies['c_user']
-	data = {
-		'fb_dtsg': fb_dtsg,
-		'variables': '{"input":{"client_mutation_id":"2","actor_id":"'+myID+'","billable_account_payment_legacy_account_id":"'+account_id+'","currency":null,"logging_data":{"logging_counter":10,"logging_id":"806193005"},"tax":{"business_address":{"city":"","country_code":"US","state":"","street1":"","street2":"","zip":""},"business_name":"","email":"","is_personal_use":false,"phone_number":"","second_tax_id":"","second_tax_id_type":null,"tax_exempt":false,"tax_id":"","tax_id_type":"NONE"},"timezone":"Asia/Jakarta"}}',
-		'doc_id': '5428097817221702'
-	}
-	requests.post(url,data = data, cookies = cookies)
-	print("đổi tiền thành công")
 def set_country_and_currentcy_lol(cookies,fb_dtsg,account_id):
 	url = "https://m.facebook.com/api/graphql/"
 	myID = cookies['c_user']
@@ -258,12 +217,12 @@ def add_card(cookies,fb_dtsg,account_id,card):
 
 	# data = {
 	# 	'fb_dtsg': fb_dtsg,
-	# 	'variables': '{"input":{"client_mutation_id":"6","actor_id":"'+myID+'","billing_address":{"country_code":"US"},"billing_logging_data":{"logging_counter":28,"logging_id":"3221251053"},"cardholder_name":"abcde","credit_card_first_6":{"sensitive_string_value":"'+card_first_6+'"},"credit_card_last_4":{"sensitive_string_value":"'+card_last_4+'"},"credit_card_number":{"sensitive_string_value":"'+card.code+'"},"csc":{"sensitive_string_value":"'+card.ccv+'"},"expiry_month":"'+month+'","expiry_year":"'+year+'","payment_account_id":"'+account_id+'","payment_type":"MOR_ADS_INVOICE","unified_payments_api":true}}',
+	# 	'variables': '{"input":{"client_mutation_id":"6","actor_id":"'+myID+'","billing_address":{"country_code":"US"},"billing_logging_data":{"logging_counter":26,"logging_id":"806193005"},"cardholder_name":"abcdefghik","credit_card_first_6":{"sensitive_string_value":"'+card_first_6+'"},"credit_card_last_4":{"sensitive_string_value":"'+card_last_4+'"},"credit_card_number":{"sensitive_string_value":"'+card.code+'"},"csc":{"sensitive_string_value":"'+card.ccv+'"},"expiry_month":"'+month+'","expiry_year":"'+year+'","payment_account_id":"'+account_id+'","payment_type":"MOR_ADS_INVOICE","unified_payments_api":true}}',
 	# 	'doc_id': '4126726757375265'
 	# }
 	# requests.post(url,data = data, cookies = cookies)
 	myID = cookies['c_user']
-	url = "https://m.secure.facebook.com/ajax/payment/token_proxy.php?tpe=%2Fapi%2Fgraphql%2F"
+	url = "https://secure.facebook.com/ajax/payment/token_proxy.php?tpe=%2Fapi%2Fgraphql%2F"
 	card_first_6 = card.code[:6]
 	card_last_4 = card.code[len(card.code)-4:]
 	date = card.date.split("|")
@@ -275,10 +234,20 @@ def add_card(cookies,fb_dtsg,account_id,card):
 
 	data = {
 		'fb_dtsg': fb_dtsg,
-		'variables': '{"input":{"client_mutation_id":"6","actor_id":"'+myID+'","billing_address":{"country_code":"US"},"billing_logging_data":{"logging_counter":26,"logging_id":"806193005"},"cardholder_name":"abcdefghik","credit_card_first_6":{"sensitive_string_value":"'+card_first_6+'"},"credit_card_last_4":{"sensitive_string_value":"'+card_last_4+'"},"credit_card_number":{"sensitive_string_value":"'+card.code+'"},"csc":{"sensitive_string_value":"'+card.ccv+'"},"expiry_month":"'+month+'","expiry_year":"'+year+'","payment_account_id":"'+account_id+'","payment_type":"MOR_ADS_INVOICE","unified_payments_api":true}}',
-		'doc_id': '4126726757375265'
+		'variables': '{"input":{"billing_address":{"country_code":"BR"},"billing_logging_data":{"logging_counter":26,"logging_id":"2754994253"},"cardholder_name":"dsfdsfaryterger","credit_card_first_6":{"sensitive_string_value":"'+card_first_6+'"},"credit_card_last_4":{"sensitive_string_value":"'+card_last_4+'"},"credit_card_number":{"sensitive_string_value":"'+card.code+'"},"csc":{"sensitive_string_value":"'+card.ccv+'"},"expiry_month":"'+month+'","expiry_year":"'+year+'","payment_account_id":"'+account_id+'","payment_type":"MOR_ADS_INVOICE","unified_payments_api":true,"actor_id":"'+myID+'","client_mutation_id":"6"}}',
+		'doc_id': '4987045951343337'
 	}
 	requests.post(url,data = data, cookies = cookies)
+def set_cpf(cookies,fb_dtsg,account_id):
+	myID = cookies['c_user']
+	url = "https://www.facebook.com/api/graphql/"
+	data = {
+		'fb_dtsg': fb_dtsg,
+		'variables': '{"input":{"billable_account_payment_legacy_account_id":"'+account_id+'","currency":null,"logging_data":{"logging_counter":57,"logging_id":"2754994253"},"tax":{"business_address":{"city":"","country_code":"BR","state":"","street1":"","street2":"","zip":""},"business_name":"","is_personal_use":false,"second_tax_id":"","tax_id":"28167684000130","tax_id_type":"BRAZIL_CNPJ"},"timezone":null,"actor_id":"'+myID+'","client_mutation_id":"11"}}',
+		'doc_id': '5428097817221702'
+	}
+	requests.post(url,data = data, cookies = cookies)
+	print("set limit thành công")
 def set_tax_after_add_card(cookies,fb_dtsg,account_id):
 	myID = cookies['c_user']
 	url = "https://m.facebook.com/api/graphql/"
@@ -360,7 +329,7 @@ def change_default_card(cookies,fb_dtsg,account_id):
 	print("Đổi default thẻ thành công")
 def auto_add_card(acc,option):
 	global count_add_card_success
-	global list_card_2
+	# global list_card_2
 	global index_list_card_2
 	global count_add_list_card_2
 	check_add_card_success = False
@@ -390,10 +359,10 @@ def auto_add_card(acc,option):
 
 
 	if check_add_card_success:
-		sl(2)
+		# sl(2)
 		# set_limit(cookies,fb_dtsg,account_id)
-		sl(2)
-		# set_tax(cookies,fb_dtsg,account_id)
+		sl(3)
+		set_cpf(cookies,fb_dtsg,account_id)
 		saveAccSuccess(acc,option)
 		count_add_card_success+=1
 		print("Add thành công: "+str(count_add_card_success)+"/"+str(count_list_clone))
@@ -471,7 +440,7 @@ def getCookie(listCookies):
 option = 1
 arrThread = []
 listClone = listCloneAcc(option)
-list_card_2 = list_card_2()
+# list_card_2 = list_card_2()
 index_list_card_2 = 0
 count_add_list_card_2 = 0
 count = 1
