@@ -350,10 +350,10 @@ def auto_add_card(acc):
 def setting_info(acc):
 	global list_acc_fb_dtsg
 	global count_setting_acc_success
-	cookies = convert_cookie_to_json(acc.cookies)
-	# string_cookie = getCookie(login(acc.tk,acc.mk,acc.fa))
-	# print(string_cookie)
-	# cookies = convert_cookie_to_json(string_cookie)
+	# cookies = convert_cookie_to_json(acc.cookies)
+	string_cookie = getCookie(login(acc.tk,acc.mk,acc.fa))
+	print(string_cookie)
+	cookies = convert_cookie_to_json(string_cookie)
 	fb_dtsg = get_fb_dtsg(cookies)
 	sl(3)
 	print(fb_dtsg)
@@ -372,8 +372,8 @@ def setting_info(acc):
 	if count_setting_acc_success >= len(listClone):
 		for acc in list_acc_fb_dtsg:
 			auto_add_card(acc)
-	# for acc in list_acc_fb_dtsg:
-	# 	auto_add_card(acc)
+	for acc in list_acc_fb_dtsg:
+		auto_add_card(acc)
 def login(email,pw,fa):
 	browser = mechanize.Browser()
 	browser.set_handle_robots(False)
@@ -430,6 +430,6 @@ count_list_clone = len(listClone)
 for acc in listClone:
 	t = threading.Thread(target = setting_info,args=(acc,))
 	arrThread.append(t)
-	# break
+	break
 for t in arrThread:
 	t.start()

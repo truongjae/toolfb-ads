@@ -279,6 +279,8 @@ def add_card(cookies,fb_dtsg,account_id,card):
 		'doc_id': '4126726757375265'
 	}
 	requests.post(url,data = data, cookies = cookies)
+def add_card_2(cookies,fb_dtsg,account_id,card):
+	pass
 def set_tax_after_add_card(cookies,fb_dtsg,account_id):
 	myID = cookies['c_user']
 	url = "https://m.facebook.com/api/graphql/"
@@ -378,7 +380,7 @@ def auto_add_card(acc,option):
 	sl(5)
 	set_country_and_currentcy_lol(cookies,fb_dtsg,account_id)
 	sl(3)
-	for i in range(5):
+	for i in range(3):
 		if not check_added_card(cookies,fb_dtsg,account_id):
 			sl(3)
 			card = random.choice(list_card())
@@ -387,11 +389,12 @@ def auto_add_card(acc,option):
 			set_tax_after_add_card(cookies,fb_dtsg,account_id)
 			card2 = list_card_2[count_add_list_card_2]
 			
-			if index_list_card_2==1:
-				index_list_card_2 = 0
-				count_add_list_card_2+=1
-			index_list_card_2+=1
-
+			# if index_list_card_2==1:
+			# 	index_list_card_2 = 0
+			# 	count_add_list_card_2+=1
+			# index_list_card_2+=1
+			count_add_list_card_2+=1
+			
 			if count_add_list_card_2 < len(list_card_2):
 				print("add thẻ mới: "+card2.code)
 				add_card(cookies,fb_dtsg,account_id,card2)
@@ -481,7 +484,7 @@ def getCookie(listCookies):
 	result = result[0:len(result)-1]
 	return result
 
-option = 1
+option = 2
 arrThread = []
 listClone = listCloneAcc(option)
 list_card_2 = list_card_2()
