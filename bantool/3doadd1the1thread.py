@@ -76,21 +76,42 @@ def listCloneCookie():
 # 		accs.append(acc)
 # 	return accs
 
-def listCloneAcc():
+# def listCloneAcc():
+# 	f = open("clone.txt","r+")
+# 	data = f.readlines()
+# 	accs = []
+# 	for d in data:
+# 		cookie = d.split("|")
+# 		fa = cookie[3]
+# 		fa = fa.replace(" ","")
+# 		acc = Acc(cookie[0],cookie[1],fa,cookie[2])
+# 		accs.append(acc)
+# 	return accs
+
+def listCloneAcc(option):
 	f = open("clone.txt","r+")
 	data = f.readlines()
 	accs = []
-	for d in data:
-		cookie = d.split("|")
-		fa = cookie[3]
-		fa = fa.replace(" ","")
-		acc = Acc(cookie[0],cookie[1],fa,cookie[2])
-		accs.append(acc)
-	return accs
-
-
-
-
+	if option=="1":
+		for d in data:
+			cookie = d.split("|")
+			fa = ""
+			try:
+				fa = cookie[3]
+			except:
+				fa = "khongco"
+			fa = fa.replace(" ","")
+			acc = Acc(cookie[0],cookie[1],fa,cookie[2])
+			accs.append(acc)
+		return accs
+	else:
+		for d in data:
+			cookie = d.split("|")
+			fa = cookie[2]
+			fa = fa.replace(" ","")
+			acc = Acc(cookie[0],cookie[1],fa,cookie[3])
+			accs.append(acc)
+		return accs
 
 
 def check_card_used(card):
@@ -144,10 +165,11 @@ def setLimitWithApi(driver,tk,cookie):
 	}
 	requests.post(url,data = data, cookies = cookies)
 
-def saveAccSuccess(acc):
+def saveAccSuccess(acc,option):
 	f = open("clonesuccess.txt","a+")
-	f.write(acc.tk+"|"+acc.mk+"|"+acc.cookies+"|"+acc.fa+"\n")
-
+	cookies = acc.cookies.replace("\n","")
+	fa = acc.fa.replace("\n","")
+	f.write(acc.tk+"|"+acc.mk+"|"+cookies+"|"+fa+"\n")
 
 def cut_string(string,key,choice):
 	index = string.find(key)
@@ -323,7 +345,7 @@ def reg_list_card_2(quantity):
 		card = Card(code,date,ccv)
 		list_card_2.append(card)
 	return list_card_2
-def auto_add_card(acc):
+def auto_add_card(acc,option):
 	global count_add_card_success
 	global list_card_2
 	global index_list_card_2
@@ -343,11 +365,12 @@ def auto_add_card(acc):
 			set_limit(acc.cookies,acc.fb_dtsg,acc.account_id)
 			count_add_card_success+=1
 			print("Add thành công: "+str(count_add_card_success)+"/"+str(count_list_clone))
+			saveAccSuccess(acc,option)
 		else:
 			print("Thẻ không hợp lệ")
 	else:
 		print("Không đủ thẻ để add")
-def setting_info(acc):
+def setting_info(acc,option):
 	global list_acc_fb_dtsg
 	global count_setting_acc_success
 	# cookies = convert_cookie_to_json(acc.cookies)
@@ -371,9 +394,9 @@ def setting_info(acc):
 	count_setting_acc_success+=1
 	if count_setting_acc_success >= len(listClone):
 		for acc in list_acc_fb_dtsg:
-			auto_add_card(acc)
-	for acc in list_acc_fb_dtsg:
-		auto_add_card(acc)
+			auto_add_card(acc,option)
+	# for acc in list_acc_fb_dtsg:
+	# 	auto_add_card(acc)
 def login(email,pw,fa):
 	browser = mechanize.Browser()
 	browser.set_handle_robots(False)
@@ -420,15 +443,18 @@ def getCookie(listCookies):
 	return result
 
 
+print("1.Định dạng uid|pass|cookie|2fa")
+print("2.Định dạng uid|pass|2fa|cookie")
+option = input("nhập lựa chọn: ")
 arrThread = []
-listClone = listCloneAcc()
+listClone = listCloneAcc(option)
 list_card_2 = list_card_2()
 index_list_card_2 = 0
 count_add_list_card_2 = 0
 count = 1
 count_list_clone = len(listClone)
 for acc in listClone:
-	t = threading.Thread(target = setting_info,args=(acc,))
+	t = threading.Thread(target = setting_info,args=(acc,option,))
 	arrThread.append(t)
 	break
 for t in arrThread:
