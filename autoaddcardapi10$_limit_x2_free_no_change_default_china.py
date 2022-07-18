@@ -297,7 +297,7 @@ def set_limit(cookies,fb_dtsg,account_id):
 		'fb_dtsg': fb_dtsg,
 		'fb_api_caller_class': 'RelayModern',
 		'fb_api_req_friendly_name': 'useBillingUpdateAccountSpendLimitScreenMutation',
-		'variables': '{"input":{"client_mutation_id":"8","actor_id":"'+myID+'","billable_account_payment_legacy_account_id":"'+account_id+'","new_spend_limit":{"amount":"0.1","currency":"USD"}}}',
+		'variables': '{"input":{"client_mutation_id":"8","actor_id":"'+myID+'","billable_account_payment_legacy_account_id":"'+account_id+'","new_spend_limit":{"amount":"1","currency":"USD"}}}',
 		'doc_id': '5615899425146711'
 	}
 	requests.post(url,data = data, cookies = cookies)

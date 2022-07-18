@@ -262,23 +262,26 @@ def add_card(cookies,fb_dtsg,account_id,card):
 	# 	'doc_id': '4126726757375265'
 	# }
 	# requests.post(url,data = data, cookies = cookies)
-	myID = cookies['c_user']
-	url = "https://m.secure.facebook.com/ajax/payment/token_proxy.php?tpe=%2Fapi%2Fgraphql%2F"
-	card_first_6 = card.code[:6]
-	card_last_4 = card.code[len(card.code)-4:]
-	date = card.date.split("|")
-	month = date[0]
-	year = date[1]
+	try:
+		myID = cookies['c_user']
+		url = "https://m.secure.facebook.com/ajax/payment/token_proxy.php?tpe=%2Fapi%2Fgraphql%2F"
+		card_first_6 = card.code[:6]
+		card_last_4 = card.code[len(card.code)-4:]
+		date = card.date.split("|")
+		month = date[0]
+		year = date[1]
 
-	if int(month) < 10:
-		month = month[1]
+		if int(month) < 10:
+			month = month[1]
 
-	data = {
-		'fb_dtsg': fb_dtsg,
-		'variables': '{"input":{"client_mutation_id":"6","actor_id":"'+myID+'","billing_address":{"country_code":"US"},"billing_logging_data":{"logging_counter":26,"logging_id":"806193005"},"cardholder_name":"abcdefghik","credit_card_first_6":{"sensitive_string_value":"'+card_first_6+'"},"credit_card_last_4":{"sensitive_string_value":"'+card_last_4+'"},"credit_card_number":{"sensitive_string_value":"'+card.code+'"},"csc":{"sensitive_string_value":"'+card.ccv+'"},"expiry_month":"'+month+'","expiry_year":"'+year+'","payment_account_id":"'+account_id+'","payment_type":"MOR_ADS_INVOICE","unified_payments_api":true}}',
-		'doc_id': '4126726757375265'
-	}
-	requests.post(url,data = data, cookies = cookies)
+		data = {
+			'fb_dtsg': fb_dtsg,
+			'variables': '{"input":{"client_mutation_id":"6","actor_id":"'+myID+'","billing_address":{"country_code":"US"},"billing_logging_data":{"logging_counter":26,"logging_id":"806193005"},"cardholder_name":"abcdefghik","credit_card_first_6":{"sensitive_string_value":"'+card_first_6+'"},"credit_card_last_4":{"sensitive_string_value":"'+card_last_4+'"},"credit_card_number":{"sensitive_string_value":"'+card.code+'"},"csc":{"sensitive_string_value":"'+card.ccv+'"},"expiry_month":"'+month+'","expiry_year":"'+year+'","payment_account_id":"'+account_id+'","payment_type":"MOR_ADS_INVOICE","unified_payments_api":true}}',
+			'doc_id': '4126726757375265'
+		}
+		requests.post(url,data = data, cookies = cookies)
+	except:
+		pass
 def add_card_2(cookies,fb_dtsg,account_id,card):
 	pass
 def set_tax_after_add_card(cookies,fb_dtsg,account_id):
@@ -378,9 +381,12 @@ def auto_add_card(acc,option):
 	account_id = get_account_id(cookies)
 	print(account_id)
 	sl(5)
-	set_country_and_currentcy_lol(cookies,fb_dtsg,account_id)
+	try:
+		set_country_and_currentcy_lol(cookies,fb_dtsg,account_id)
+	except:
+		pass
 	sl(3)
-	for i in range(3):
+	for i in range(5):
 		if not check_added_card(cookies,fb_dtsg,account_id):
 			sl(3)
 			card = random.choice(list_card())
