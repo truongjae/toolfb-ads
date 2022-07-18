@@ -167,9 +167,9 @@ def setLimitWithApi(driver,tk,cookie):
 
 def saveAccSuccess(acc,option):
 	f = open("clonesuccess.txt","a+")
-	cookies = acc.cookies.replace("\n","")
+	# cookies = acc.cookies.replace("\n","")
 	fa = acc.fa.replace("\n","")
-	f.write(acc.tk+"|"+acc.mk+"|"+cookies+"|"+fa+"\n")
+	f.write(acc.tk+"|"+acc.mk+"|"+fa+"\n")
 
 def cut_string(string,key,choice):
 	index = string.find(key)
