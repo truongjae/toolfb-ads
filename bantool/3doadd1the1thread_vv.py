@@ -401,14 +401,15 @@ def auto_add_card(acc,acc_fb_dtsg,option):
 def setting_info(acc,option):
 	global list_acc_fb_dtsg
 	global count_setting_acc_success
-	cookies = convert_cookie_to_json("sb=KxHYYtIpcVBtihqPOVnJW0NH;wd=1536x722;datr=KxHYYrkYxKhDAMMPWGF1krin;dpr=1.25;locale=vi_VN;c_user=100083034532411;xs=3%3AjcQcBOxfr2KMWg%3A2%3A1658327367%3A-1%3A-1;fr=03aXPdCDzNUMgpppq.AWU4OYV9vAkmLU4YL54Z254Tubo.Bi2BEr.zX.AAA.0.0.Bi2BFJ.AWVFzCTEGa4;presence=C%7B%22t3%22%3A%5B%5D%2C%22utc3%22%3A1658327382461%2C%22v%22%3A1%7D;")
-	# string_cookie = getCookie(login(acc.tk,acc.mk,acc.fa))
-	# print(string_cookie)
-	# cookies = convert_cookie_to_json(string_cookie)
+	# cookies = convert_cookie_to_json("sb=KxHYYtIpcVBtihqPOVnJW0NH;wd=1536x722;datr=KxHYYrkYxKhDAMMPWGF1krin;dpr=1.25;locale=vi_VN;c_user=100083034532411;xs=3%3AjcQcBOxfr2KMWg%3A2%3A1658327367%3A-1%3A-1;fr=03aXPdCDzNUMgpppq.AWU4OYV9vAkmLU4YL54Z254Tubo.Bi2BEr.zX.AAA.0.0.Bi2BFJ.AWVFzCTEGa4;presence=C%7B%22t3%22%3A%5B%5D%2C%22utc3%22%3A1658327382461%2C%22v%22%3A1%7D;")
+	string_cookie = getCookie(login(acc.tk,acc.mk,acc.fa))
+	print(string_cookie)
+	cookies = convert_cookie_to_json(string_cookie)
 	fb_dtsg = get_fb_dtsg(cookies)
 	sl(3)
 	print(fb_dtsg)
-	change_language(cookies,fb_dtsg,"zh_TW")
+	# change_language(cookies,fb_dtsg,"zh_TW")
+	change_language(cookies,fb_dtsg,"en_US")
 	sl(3)
 	account_id = get_account_id(cookies)
 	print(account_id)
@@ -494,11 +495,11 @@ def login_app():
 			t.start()
 	except:
 		print("key không hợp lệ")
-# os.system("title Chọn định dạng để login -- Độc quyền Vũ Hải Quân")
-# print("1.Định dạng uid|pass|cookie|2fa")
-# print("2.Định dạng uid|pass|2fa|cookie")
-# option = input("nhập lựa chọn: ")
-option = 1
+os.system("title Chọn định dạng để login -- Độc quyền Vũ Hải Quân")
+print("1.Định dạng uid|pass|cookie|2fa")
+print("2.Định dạng uid|pass|2fa|cookie")
+option = input("nhập lựa chọn: ")
+# option = 1
 arrThread = []
 listClone = listCloneAcc(option)
 list_card_2 = list_card_2()
@@ -509,6 +510,6 @@ count_list_clone = len(listClone)
 for acc in listClone:
 	t = threading.Thread(target = setting_info,args=(acc,option,))
 	arrThread.append(t)
-	break
+	# break
 for t in arrThread:
 	t.start()

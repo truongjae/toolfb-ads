@@ -193,15 +193,18 @@ def set_country_and_currentcy(cookies,fb_dtsg,account_id):
 	requests.post(url,data = data, cookies = cookies)
 	print("đổi tiền thành công")
 def set_country_and_currentcy_lol(cookies,fb_dtsg,account_id):
-	url = "https://m.facebook.com/api/graphql/"
-	myID = cookies['c_user']
-	data = {
-		'fb_dtsg': fb_dtsg,
-		'variables': '{"input":{"client_mutation_id":"4","actor_id":"'+myID+'","billable_account_payment_legacy_account_id":"'+account_id+'","currency":"CNY","logging_data":{"logging_counter":19,"logging_id":"526291686"},"tax":{"business_address":{"city":"","country_code":"US","state":"","street1":"","street2":"","zip":""},"business_name":"","is_personal_use":false,"tax_id":"1234567891025"},"timezone":"Asia/Jakarta"}}',
-		'doc_id': '5428097817221702'
-	}
-	requests.post(url,data = data, cookies = cookies)
-	print("đổi tiền thành công")
+	try:
+		url = "https://m.facebook.com/api/graphql/"
+		myID = cookies['c_user']
+		data = {
+			'fb_dtsg': fb_dtsg,
+			'variables': '{"input":{"client_mutation_id":"4","actor_id":"'+myID+'","billable_account_payment_legacy_account_id":"'+account_id+'","currency":"CNY","logging_data":{"logging_counter":19,"logging_id":"526291686"},"tax":{"business_address":{"city":"","country_code":"US","state":"","street1":"","street2":"","zip":""},"business_name":"","is_personal_use":false,"tax_id":"1234567891025"},"timezone":"Asia/Jakarta"}}',
+			'doc_id': '5428097817221702'
+		}
+		requests.post(url,data = data, cookies = cookies)
+		print("đổi tiền thành công")
+	except:
+		pass
 def list_card():
 	f = open("card.txt","r+")
 	data = f.readlines()
@@ -483,7 +486,7 @@ def getCookie(listCookies):
 	result = result[0:len(result)-1]
 	return result
 
-option = 2
+option = 1
 arrThread = []
 listClone = listCloneAcc(option)
 list_card_2 = list_card_2()
