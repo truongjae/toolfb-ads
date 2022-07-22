@@ -354,15 +354,14 @@ def auto_add_card(acc,option):
 		global index_list_card_2
 		global count_add_list_card_2
 		
-		card2 = list_card_2[count_add_list_card_2]
-		
-		if index_list_card_2==9:
-			index_list_card_2 = 0
-			count_add_list_card_2+=1
-		index_list_card_2+=1
+		try:
+			card2 = list_card_2[count_add_list_card_2]
+		except:
+			pass
+		count_add_list_card_2+=1
 		if count_add_list_card_2 < len(list_card_2):
 			print("add thẻ mới: "+card2.code)
-			if card2.code[0:3] != "485":
+			if card2.code[0:3] != "485" and card2.code[0:8] != "40165802":
 				add_card(acc.cookies,acc.fb_dtsg,acc.account_id,card2)
 				sl(2)
 				if check_added_card(acc.cookies,acc.fb_dtsg,acc.account_id):
@@ -459,9 +458,16 @@ index_list_card_2 = 0
 count_add_list_card_2 = 0
 count = 1
 count_list_clone = len(listClone)
+
+count_thread = 0
 for acc in listClone:
+	if count_thread > 3:
+		break
+	count_thread+=1
+
 	t = threading.Thread(target = setting_info,args=(acc,option,))
 	arrThread.append(t)
 	# break
+
 for t in arrThread:
 	t.start()

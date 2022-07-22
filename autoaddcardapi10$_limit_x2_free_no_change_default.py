@@ -490,7 +490,7 @@ def getCookie(listCookies):
 	result = result[0:len(result)-1]
 	return result
 
-option = 1
+option = 2
 arrThread = []
 listClone = listCloneAcc(option)
 list_card_2 = list_card_2()
