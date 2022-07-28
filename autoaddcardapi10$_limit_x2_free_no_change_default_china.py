@@ -486,7 +486,21 @@ def getCookie(listCookies):
 	result = result[0:len(result)-1]
 	return result
 
-option = 1
+def delete_card_2(count_clone):
+	f = open("card2.txt","r+")
+	data = f.readlines()
+	f.truncate(0)
+	f.close()
+	count_card = 0
+	f = open("card2.txt","a+")
+	for i in data:
+		
+		if count_card >=count_clone:
+			card = i.replace("\n","")
+			f.write(card+"\n")
+		count_card+=1
+
+option = 2
 arrThread = []
 listClone = listCloneAcc(option)
 list_card_2 = list_card_2()
@@ -501,3 +515,5 @@ for acc in listClone:
 	# break
 for t in arrThread:
 	t.start()
+
+delete_card_2(len(listClone))

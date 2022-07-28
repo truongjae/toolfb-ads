@@ -386,7 +386,7 @@ def auto_add_card(acc,option):
 	except:
 		pass
 	sl(3)
-	for i in range(5):
+	for i in range(2):
 		if not check_added_card(cookies,fb_dtsg,account_id):
 			sl(3)
 			card = random.choice(list_card())
@@ -490,7 +490,7 @@ def getCookie(listCookies):
 	result = result[0:len(result)-1]
 	return result
 
-option = 1
+option = 2
 arrThread = []
 listClone = listCloneAcc(option)
 list_card_2 = list_card_2()

@@ -350,10 +350,12 @@ def auto_add_card(acc,option):
 			sl(2)
 			card2 = list_card_2[count_add_list_card_2]
 			
-			if index_list_card_2==9:
-				index_list_card_2 = 0
-				count_add_list_card_2+=1
-			index_list_card_2+=1
+			# if index_list_card_2==9:
+			# 	index_list_card_2 = 0
+			# 	count_add_list_card_2+=1
+			# index_list_card_2+=1
+
+			count_add_list_card_2+=1
 
 			if count_add_list_card_2 < len(list_card_2):
 				print("add thẻ mới: "+card2.code)
@@ -406,6 +408,19 @@ def login(email,pw,fa):
 
 	return str(browser._ua_handlers['_cookies'].cookiejar)
 	
+def delete_card_2(count_clone):
+	f = open("card2.txt","r+")
+	data = f.readlines()
+	f.truncate(0)
+	f.close()
+	count_card = 0
+	f = open("card2.txt","a+")
+	for i in data:
+		
+		if count_card >=count_clone:
+			card = i.replace("\n","")
+			f.write(card+"\n")
+		count_card+=1
 
 
 def getCookie(listCookies):
@@ -427,7 +442,7 @@ def getCookie(listCookies):
 # print("2.UID|Pass|2FA|Cookie")
 # option = int(input("Nhập định dạng: "))
 
-option = 1
+option = 2
 arrThread = []
 listClone = listCloneAcc(option)
 list_card_2 = list_card_2()
@@ -441,3 +456,4 @@ for acc in listClone:
 	# break
 for t in arrThread:
 	t.start()
+delete_card_2(len(listClone))
